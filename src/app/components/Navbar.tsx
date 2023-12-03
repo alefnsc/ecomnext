@@ -1,6 +1,6 @@
 import SearchInput from "./SearchInput";
 import Cart from "./Cart";
-import MenuList from "./MenuList";
+import ListMenu from "./ListMenu";
 import Logo from "./Logo";
 import Divider from "./Divider";
 import ProfileMenu from "./ProfileMenu";
@@ -11,12 +11,12 @@ export default function Navbar() {
       <div className="flex flex-row container max-w-[1200px] min-w-[480px] w-full justify-between items-center">
         <div className="flex flex-row space-x-6">
           <Logo />
-          <MenuList />
+          <ListMenu />
         </div>
         <div className="flex flex-row w-full justify-center">
           <SearchInput />
         </div>
-        <div className="flex flex-row space-x-2  px-4">
+        <div className="flex flex-row space-x-2 px-4 justify-center items-center">
           <Cart />
           <Divider />
           <ProfileMenu />
