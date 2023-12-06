@@ -1,8 +1,8 @@
-import Container from "@/app/components/Container";
+import Container from "../../../components/Container";
 import { Metadata } from "next";
 import Image from "next/image";
-import { getProductById } from "@/app/services/fetchProducts";
-import { formatCurrency } from "@/app/helpers/numberHelpers";
+import { getProductById } from "../../services/fetchProducts";
+import { formatCurrency } from "../../../helpers/numberHelpers";
 
 interface IProductPageProps {
   params: {
