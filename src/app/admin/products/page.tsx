@@ -1,8 +1,8 @@
 "use client";
-import Container from "@/components/Container";
 
 import { useProductData } from "../../customHooks/useProductData";
 
+import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
 
 import { FaEdit } from "react-icons/fa";
@@ -13,6 +13,89 @@ type Props = {};
 
 export default function AdminProducts({}: Props) {
   const products: Product[] = useProductData();
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  function filterProductsBySearchTerm(
+    products: Product[],
+    searchTerm: string
+  ): Product[] {
+    const filteredProducts = products.filter(
+      (product) =>
+        typeof product.title === "string" &&
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return filteredProducts;
+  }
+
+  function filterProductsByCategory(
+    products: Product[],
+    category: string
+  ): Product[] {
+    const filteredProducts = products.filter(
+      (product) =>
+        typeof product.category === "string" &&
+        product.category.toLowerCase().includes(category.toLowerCase())
+    );
+
+    return filteredProducts;
+  }
+
+  useEffect(() => {
+    let combinedFilteredProducts = products;
+
+    // Apply search term filter
+    if (searchTerm) {
+      combinedFilteredProducts = filterProductsBySearchTerm(
+        combinedFilteredProducts,
+        searchTerm
+      );
+    }
+
+    // Apply category filter
+    if (selectedCategory) {
+      combinedFilteredProducts = filterProductsByCategory(
+        combinedFilteredProducts,
+        selectedCategory
+      );
+    }
+
+    // Update the state with the combined filters
+    setFilteredProducts(combinedFilteredProducts);
+  }, [products, searchTerm, selectedCategory]);
+
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const newSelectedCategory = event.target.value;
+    setSelectedCategory(newSelectedCategory);
+
+    const newFilteredProducts = filterProductsByCategory(
+      products,
+      newSelectedCategory
+    );
+    setFilteredProducts(newFilteredProducts);
+  };
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+
+    if (newSearchTerm != "") {
+      const newFilteredProducts = filterProductsBySearchTerm(
+        products,
+        newSearchTerm
+      );
+      setFilteredProducts(newFilteredProducts);
+    }
+  };
+
+  const categories: string[] = products
+    .map((product) => product.category)
+    .filter((value, index, self) => self.indexOf(value) === index);
+
   return (
     <>
       {/* productListCommands */}
@@ -25,10 +108,26 @@ export default function AdminProducts({}: Props) {
             type="text"
             className="rounded-md bg-white shadow-md p-2 m-2"
             placeholder="Search a product..."
+            value={searchTerm}
+            onChange={handleFilterChange}
           ></input>
-          <select className="rounded-md bg-white shadow-md p-2 m-2">
-            <option>teste</option>
-            <option>teste</option>
+          <select
+            className="rounded-md bg-white shadow-md p-2 m-2"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            defaultValue={""}
+          >
+            <option disabled value="disabled">
+              Filter By Category
+            </option>
+            <option value="">All Categories</option>
+            {categories.map((category) => {
+              return (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              );
+            })}
           </select>
           <button className="rounded-lg shadow-lg text-sm bg-amber-500 hover:bg-orange-600 text-gray-100 p-2">
             New Category
@@ -45,7 +144,7 @@ export default function AdminProducts({}: Props) {
           <div>QTT</div>
           <div>PRICE</div>
         </div>
-        {products.map((product) => {
+        {filteredProducts.map((product) => {
           return (
             <div
               key={product.id}
