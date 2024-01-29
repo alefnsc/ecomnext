@@ -1,9 +1,9 @@
+import Image from "next/image";
+
 export default function Logo() {
   return (
-    <div className="flex flex-row px-4">
-      <h1 className="lg:text-2xl md:text-xl text-lg text-gray-800 font-bold">
-        Logo
-      </h1>
+    <div className="flex items-center justify-center flex-row px-4">
+      <Image src="/logo.png" width={150} height={67} alt="logo" />
     </div>
   );
 }

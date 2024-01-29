@@ -15,7 +15,8 @@ model Product {
   name        String
   description String?
   price       Float
-  imageUrl      String?
+  imageUrl    String?
+  category    String
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

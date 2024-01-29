@@ -3,7 +3,6 @@ import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { TiThMenu } from "react-icons/ti";
 import { IoHomeOutline } from "react-icons/io5";
-import { RiProductHuntLine } from "react-icons/ri";
 import { GrUserAdmin } from "react-icons/gr";
 
 export default function ListMenu() {
@@ -48,13 +47,6 @@ export default function ListMenu() {
         >
           <IoHomeOutline className="pr-2 lg:w-7 lg:h-7 w-6 h-6" />
           Home
-        </Link>
-        <Link
-          className="flex flex-row items-center  lg:py-2 py-1 hover:text-red-600 w-full transition duration-300 ease-in-out"
-          href="/products"
-        >
-          <RiProductHuntLine className="pr-2 lg:w-7 lg:h-7 w-6 h-6" />
-          Products
         </Link>
         <Link
           className="flex flex-row items-center lg:py-2 py-1 hover:text-red-600 w-full transition duration-300 ease-in-out"

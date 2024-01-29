@@ -3,9 +3,9 @@ import Image from "next/image";
 
 interface IProductCardProps {
   product: {
-    id: number;
-    title: string;
-    image: string;
+    id: string;
+    name: string;
+    imageUrl: string | null;
   };
 }
 
@@ -17,13 +17,13 @@ export default function ProductCard({ product }: IProductCardProps) {
     >
       <Link href={`/products/${product.id}`}>
         <Image
-          alt={product.title}
-          src={product.image}
+          alt={product.name}
+          src={product.imageUrl || "/images/placeholder.png"}
           width={200}
           height={200}
           className="rounded-lg object-cover object-center w-64 h-64"
         />
-        <h2 className="p-4 w-[90%] text-lg">{product.title}</h2>
+        <h2 className="p-4 w-[90%] text-lg">{product.name}</h2>
       </Link>
     </div>
   );

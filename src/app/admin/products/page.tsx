@@ -1,10 +1,9 @@
 "use client";
 
-import { useProductData } from "../../customHooks/useProductData";
+import { useProductData } from "../../../hooks/useProductData";
 
 import { useEffect, useState } from "react";
-import { Product } from "@/types/product";
-
+import { Product } from "../../../types/product";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import Image from "next/image";
