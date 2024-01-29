@@ -1,10 +1,35 @@
 export interface Product {
-  id: number;
-  title: string;
-  image: string;
+  id: string;
+  name: string;
+  imageUrl: string | null;
   price: number;
-  quantity: number;
-  category: string;
   description: string | null;
-  active?: boolean;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  ProductStock?: ProductStock[];
+  orderItems?: OrderItem[];
+}
+
+export interface ProductStock {
+  id: number;
+  quantity: number;
+  productId: number;
+  Product?: Product;
+}
+
+export interface OrderItem {
+  id: number;
+  quantity: number;
+  productId: number;
+  orderId: number;
+  Product?: Product;
+  Order?: Order;
+}
+
+export interface Order {
+  id: number;
+  total: number;
+  userId: number;
+  OrderItems?: OrderItem[];
 }
