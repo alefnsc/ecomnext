@@ -20,7 +20,7 @@ interface IProduct {
 export default function ProductView({ product }: IProduct) {
   return (
     <Container title={product.name}>
-      <div className="flex flex-row items-center justify-center text-justify w-full  max-w-[400]">
+      <div className="flex flex-row items-center justify-center text-justify  max-w-[800]">
         <div className="flex flex-col  w-full  py-8 px-4 mx-4 my-6 ">
           <Image
             alt={product.name}
