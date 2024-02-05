@@ -4,6 +4,7 @@ export interface Product {
   imageUrl: string | null;
   price: number;
   description: string | null;
+  category: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
