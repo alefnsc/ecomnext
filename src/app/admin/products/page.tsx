@@ -1,7 +1,5 @@
 "use client";
 
-import { useProductData } from "../../../hooks/useProductData";
-
 import { useEffect, useState } from "react";
 import { Product } from "../../../types/product";
 import { FaEdit } from "react-icons/fa";
@@ -11,7 +9,8 @@ import Image from "next/image";
 type Props = {};
 
 export default function AdminProducts({}: Props) {
-  const products: Product[] = useProductData();
+  const products: Product[] = [];
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,8 +21,8 @@ export default function AdminProducts({}: Props) {
   ): Product[] {
     const filteredProducts = products.filter(
       (product) =>
-        typeof product.title === "string" &&
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        typeof product.name === "string" &&
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return filteredProducts;
@@ -152,17 +151,17 @@ export default function AdminProducts({}: Props) {
               <div> {product.id}</div>
               <div>
                 <Image
-                  alt={product.title}
-                  src={product.image}
+                  alt={product.name}
+                  src={product.imageUrl}
                   className="w-16 h-16 rounded-full"
                   width={40}
                   height={40}
                 />
               </div>
               <div className="overflow-hidden text-overflow">
-                {product.title}
+                {product.name}
               </div>
-              <div>{product.quantity || 1}</div>
+              <div>{product.ProductStock.length}</div>
               <div>{product.price}</div>
               <div className="flex flex-row flex-wrap xs:space-y-2  xl:space-x-2 lg:space-x-2 md:space-x-2 ">
                 <button className="p-1 bg-cyan-600 rounded-md hover:bg-cyan-800 ">

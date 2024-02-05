@@ -3,8 +3,12 @@ const nextConfig = {
   images: {
     domains: ["fakestoreapi.com", "miro.medium.com"],
   },
-  webpack(config) {
-    config.infrastructureLogging = { debug: /PackFileCache/ };
+  reactStrictMode: true,
+  webpack: (config) => {
+    config.infrastructureLogging = {
+      level: "error",
+    };
+
     return config;
   },
 };
