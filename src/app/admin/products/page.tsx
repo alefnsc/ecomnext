@@ -14,6 +14,11 @@ export default function AdminProducts({}: Props) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleCategoryModal = () => {
+    setIsOpen(!isOpen);
+  };
 
   function filterProductsBySearchTerm(
     products: Product[],
@@ -44,7 +49,6 @@ export default function AdminProducts({}: Props) {
   useEffect(() => {
     let combinedFilteredProducts = products;
 
-    // Apply search term filter
     if (searchTerm) {
       combinedFilteredProducts = filterProductsBySearchTerm(
         combinedFilteredProducts,
@@ -52,7 +56,6 @@ export default function AdminProducts({}: Props) {
       );
     }
 
-    // Apply category filter
     if (selectedCategory) {
       combinedFilteredProducts = filterProductsByCategory(
         combinedFilteredProducts,
@@ -127,9 +130,13 @@ export default function AdminProducts({}: Props) {
               );
             })}
           </select>
-          <button className="rounded-lg shadow-lg text-sm bg-amber-500 hover:bg-orange-600 text-gray-100 p-2">
+          <button
+            onClick={toggleCategoryModal}
+            className="rounded-lg shadow-lg text-sm bg-amber-500 hover:bg-orange-600 text-gray-100 p-2"
+          >
             New Category
           </button>
+
           <button className="rounded-lg shadow-lg text-sm  text-gray-100 py-2 bg-green-600 hover:bg-lime-800 p-2">
             New Product
           </button>
@@ -175,6 +182,48 @@ export default function AdminProducts({}: Props) {
           );
         })}
       </div>
+      {isOpen && (
+        <div className="fixed inset-0 flex items-start justify-center z-50">
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+
+          <div className="bg-white rounded-lg shadow p-6 m-4  mt-56 max-w-full max-h-full text-center overflow-auto z-50 ">
+            <h1 className="text-xl font-bold mb-4">New Category</h1>
+
+            <div className="flex flex-col items-center justify-center">
+              <label htmlFor="categoryName">
+                Name:
+                <input
+                  type="text"
+                  className="rounded-md bg-white shadow-md p-2 m-2"
+                  placeholder="Category Name"
+                ></input>
+              </label>
+              <label htmlFor="categoryDescription">
+                Description:
+                <input
+                  type="text"
+                  className="rounded-md bg-white shadow-md p-2 m-2"
+                  placeholder="Category Description"
+                ></input>
+              </label>
+            </div>
+            <div className="flex flex-row justify-center space-x-4">
+              <button
+                onClick={toggleCategoryModal}
+                className="mt-4 border text-black p-2   hover:bg-gray-200 rounded-lg shadow-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={toggleCategoryModal}
+                className="mt-4 border text-gray-100 p-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg shadow-lg"
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
