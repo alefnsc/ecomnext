@@ -5,11 +5,12 @@ import { Product } from "../../../types/product";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import Image from "next/image";
+import { useProductData } from "../../../context/ProductContext";
 
 type Props = {};
 
 export default function AdminProducts({}: Props) {
-  const products: Product[] = [];
+  const { products } = useProductData();
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
@@ -168,7 +169,7 @@ export default function AdminProducts({}: Props) {
               <div className="overflow-hidden text-overflow">
                 {product.name}
               </div>
-              <div>{product.ProductStock.length}</div>
+              <div>{product.ProductStock?.length}</div>
               <div>{product.price}</div>
               <div className="flex flex-row flex-wrap xs:space-y-2  xl:space-x-2 lg:space-x-2 md:space-x-2 ">
                 <button className="p-1 bg-cyan-600 rounded-md hover:bg-cyan-800 ">
