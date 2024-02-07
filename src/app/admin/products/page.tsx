@@ -1,11 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Product } from "../../../types/product";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import Image from "next/image";
+
+import { Product } from "../../../types/product";
+
 import { useProductData } from "../../../context/ProductContext";
+
+import {
+  filterProductsByCategory,
+  filterProductsBySearchTerm,
+} from "../../../helpers/filteringHelpers";
 
 type Props = {};
 
@@ -20,32 +27,6 @@ export default function AdminProducts({}: Props) {
   const toggleCategoryModal = () => {
     setIsOpen(!isOpen);
   };
-
-  function filterProductsBySearchTerm(
-    products: Product[],
-    searchTerm: string
-  ): Product[] {
-    const filteredProducts = products.filter(
-      (product) =>
-        typeof product.name === "string" &&
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    return filteredProducts;
-  }
-
-  function filterProductsByCategory(
-    products: Product[],
-    category: string
-  ): Product[] {
-    const filteredProducts = products.filter(
-      (product) =>
-        typeof product.category === "string" &&
-        product.category.toLowerCase().includes(category.toLowerCase())
-    );
-
-    return filteredProducts;
-  }
 
   useEffect(() => {
     let combinedFilteredProducts = products;
@@ -63,8 +44,6 @@ export default function AdminProducts({}: Props) {
         selectedCategory
       );
     }
-
-    // Update the state with the combined filters
     setFilteredProducts(combinedFilteredProducts);
   }, [products, searchTerm, selectedCategory]);
 
