@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
-import Image from "next/image";
 
 import { Product } from "../../../types/product";
 
@@ -13,7 +10,11 @@ import {
   filterProductsByCategory,
   filterProductsBySearchTerm,
 } from "../../../helpers/filteringHelpers";
+
 import NewObjectModal from "../../../components/NewObjectModal";
+import NewObjectButton from "../../../components/NewObjectButton";
+import ProductTile from "../../../components/ProductTile";
+import ProductAdminTableHeader from "../../../components/ProductAdminTableHeader";
 
 type Props = {};
 
@@ -25,11 +26,6 @@ export default function AdminProducts({}: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [objectName, setObjectName] = useState("");
-
-  const toggleCategoryModal = (objectName?: string) => {
-    setIsOpen(!isOpen);
-    setObjectName(objectName);
-  };
 
   useEffect(() => {
     let combinedFilteredProducts = products;
@@ -80,12 +76,13 @@ export default function AdminProducts({}: Props) {
     .map((product) => product.category)
     .filter((value, index, self) => self.indexOf(value) === index);
 
+  const toggleObjectModal = (objectName?: string) => {
+    setIsOpen(!isOpen);
+    setObjectName(objectName);
+  };
+
   return (
     <>
-      {/* productListCommands */}
-
-      {/* productList */}
-
       <div className="flex flex-col items-center justify-center m-auto w-[80%] max-w-[1200px] min-w-[480px] mt-6 object-contain">
         <div className="flex flex-row space-x-2 my-2">
           <input
@@ -113,61 +110,31 @@ export default function AdminProducts({}: Props) {
               );
             })}
           </select>
-          <button
-            onClick={() => toggleCategoryModal("category")}
-            className="rounded-lg shadow-lg text-sm bg-amber-500 hover:bg-orange-600 text-gray-100 p-2"
-          >
-            New Category
-          </button>
 
-          <button className="rounded-lg shadow-lg text-sm  text-gray-100 py-2 bg-green-600 hover:bg-lime-800 p-2">
-            New Product
-          </button>
+          <NewObjectButton
+            toggleObjectModal={toggleObjectModal}
+            objectName="Category"
+            bgColor="bg-amber-500"
+            bgHoverColor="bg-orange-600"
+          />
+
+          <NewObjectButton
+            toggleObjectModal={toggleObjectModal}
+            objectName="Product"
+            bgColor="bg-green-600"
+            bgHoverColor="bg-lime-800"
+          />
         </div>
 
-        <div className="text-white grid grid-cols-6 gap-6 justify-between py-2 px-4 bg-cyan-600 w-full">
-          <div>ID</div>
-          <div>IMAGE</div>
-          <div>NAME</div>
-          <div>QTT</div>
-          <div>PRICE</div>
-        </div>
-        {filteredProducts.map((product) => {
-          return (
-            <div
-              key={product.id}
-              className="even:bg-gray-100 odd:bg-white w-full grid grid-cols-6 gap-6 items-center justify-center py-2 px-4 hover:bg-cyan-50 "
-            >
-              <div> {product.id}</div>
-              <div>
-                <Image
-                  alt={product.name}
-                  src={product.imageUrl}
-                  className="w-16 h-16 rounded-full"
-                  width={40}
-                  height={40}
-                />
-              </div>
-              <div className="overflow-hidden text-overflow">
-                {product.name}
-              </div>
-              <div>{product.ProductStock?.length}</div>
-              <div>{product.price}</div>
-              <div className="flex flex-row flex-wrap xs:space-y-2  xl:space-x-2 lg:space-x-2 md:space-x-2 ">
-                <button className="p-1 bg-cyan-600 rounded-md hover:bg-cyan-800 ">
-                  <FaEdit className="h-6 w-6 items-center justify-center text-white cursor-pointer" />
-                </button>
-                <button className="p-1 bg-red-600 rounded-md hover:bg-red-800">
-                  <MdDeleteForever className="h-6 w-6 items-center justify-center text-white cursor-pointer" />
-                </button>
-              </div>
-            </div>
-          );
-        })}
+        <ProductAdminTableHeader />
+
+        {filteredProducts.map((product) => (
+          <ProductTile key={product.id} product={product} />
+        ))}
       </div>
       {isOpen && (
         <NewObjectModal
-          toggleCategoryModal={toggleCategoryModal}
+          toggleCategoryModal={toggleObjectModal}
           objectName={objectName}
         />
       )}
