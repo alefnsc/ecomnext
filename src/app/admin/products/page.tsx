@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Product } from "../../../types/product";
 
-import { useProductData } from "../../../context/ProductContext";
+import { useProductData } from "../../../contexts/ProductContext";
 
 import {
   filterProductsByCategory,

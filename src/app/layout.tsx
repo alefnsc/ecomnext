@@ -4,7 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { ProductProvider } from "../context/ProductContext";
+import { ProductProvider } from "../contexts/ProductContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

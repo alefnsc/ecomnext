@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import ProductGrid from "../components/ProductGrid";
 
-import { useProductData } from "../context/ProductContext";
+import { useProductData } from "../contexts/ProductContext";
 
 export default function HomePage() {
   const { products } = useProductData();
