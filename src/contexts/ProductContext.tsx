@@ -35,10 +35,6 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     getProducts();
   }, []);
 
-  const getProductById = (id: string): Product | undefined => {
-    return products.find((product) => product.id === id);
-  };
-
   return (
     <ProductContext.Provider value={{ products }}>
       {children}
