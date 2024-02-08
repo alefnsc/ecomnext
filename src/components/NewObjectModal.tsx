@@ -16,23 +16,35 @@ export default function NewObjectModal({
       <div className="bg-white rounded-lg shadow p-6 m-4  mt-56 max-w-full max-h-full text-center overflow-auto z-50 ">
         <h1 className="text-xl font-bold mb-4">New {objectName}</h1>
 
-        <div className="flex flex-col items-center justify-center">
-          <label htmlFor="categoryName">
-            Name:
-            <input
-              type="text"
-              className="rounded-md bg-white shadow-md p-2 m-2"
-              placeholder="Category Name"
-            ></input>
-          </label>
-          <label htmlFor="categoryDescription">
-            Description:
-            <input
-              type="text"
-              className="rounded-md bg-white shadow-md p-2 m-2"
-              placeholder="Category Description"
-            ></input>
-          </label>
+        <div className="justify-start grid grid-cols-2 items-center gap-4">
+          <div className="items-start">Name:</div>
+          <input
+            type="text"
+            className="rounded-md bg-white shadow-md p-2 m-2"
+            placeholder={`${objectName} Name`}
+          ></input>
+          <div className="items-start">Description:</div>
+          <input
+            type="text"
+            className="rounded-md bg-white shadow-md p-2 m-2"
+            placeholder={`${objectName} Description`}
+          ></input>
+          {objectName === "Product" && (
+            <>
+              <div className="items-start">Category:</div>
+              <input
+                type="text"
+                className="rounded-md bg-white shadow-md p-2 m-2"
+                placeholder={`${objectName} Category`}
+              ></input>
+              <div className="items-start">Price:</div>
+              <input
+                type="text"
+                className="rounded-md bg-white shadow-md p-2 m-2"
+                placeholder={`${objectName} Price`}
+              ></input>
+            </>
+          )}
         </div>
         <div className="flex flex-row justify-center space-x-4">
           <button
