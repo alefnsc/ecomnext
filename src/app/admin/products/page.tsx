@@ -2,26 +2,27 @@
 
 import { useEffect, useState } from "react";
 
-import { Product } from "../../../types/product";
+import { Product } from "@/types/product";
+import { Category } from "@/types/category";
 
-import { useProductData } from "../../../contexts/ProductContext";
-
+import { useProductData } from "@/contexts/ProductContext";
+import { useCategoryData } from "@/contexts/CategoryContext";
 import {
   filterProductsByCategory,
   filterProductsBySearchTerm,
-} from "../../../helpers/filteringHelpers";
+} from "@/helpers/filteringHelpers";
 
-import NewObjectModal from "../../../components/NewObjectModal";
-import NewObjectButton from "../../../components/NewObjectButton";
-import ProductTile from "../../../components/ProductTile";
-import ProductAdminTableHeader from "../../../components/ProductAdminTableHeader";
+import NewObjectModal from "@/components/NewObjectModal";
+import NewObjectButton from "@/components/NewObjectButton";
+import ProductTile from "@/components/ProductTile";
+import ProductAdminTableHeader from "@/components/ProductAdminTableHeader";
 
-type Props = {};
-
-export default function AdminProducts({}: Props) {
+export default function AdminProducts() {
   const { products } = useProductData();
+  const { categories } = useCategoryData();
 
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -72,13 +73,12 @@ export default function AdminProducts({}: Props) {
     }
   };
 
-  const categories: string[] = products
-    .map((product) => product.category)
-    .filter((value, index, self) => self.indexOf(value) === index);
-
   const toggleObjectModal = (objectName?: string) => {
     setIsOpen(!isOpen);
     setObjectName(objectName);
+    if (isOpen) {
+      window.location.reload();
+    }
   };
 
   return (
@@ -104,8 +104,8 @@ export default function AdminProducts({}: Props) {
             <option value="">All Categories</option>
             {categories.map((category) => {
               return (
-                <option key={category} value={category}>
-                  {category}
+                <option key={category.id} value={category.name}>
+                  {category.name}
                 </option>
               );
             })}
@@ -134,7 +134,7 @@ export default function AdminProducts({}: Props) {
       </div>
       {isOpen && (
         <NewObjectModal
-          toggleCategoryModal={toggleObjectModal}
+          toggleNewObjectModal={toggleObjectModal}
           objectName={objectName}
         />
       )}

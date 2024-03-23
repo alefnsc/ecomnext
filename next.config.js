@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["fakestoreapi.com", "miro.medium.com"],
+    domains: ["files.stripe.com"],
   },
   reactStrictMode: true,
   webpack: (config) => {

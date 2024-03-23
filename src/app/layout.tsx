@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ProductProvider } from "../contexts/ProductContext";
+import { CategoryProvider } from "@/contexts/CategoryContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <ProductProvider>
-        <ClerkProvider>
-          <body className={inter.className}>
-            <Navbar />
-            {children}
-            <Footer />
-          </body>
-        </ClerkProvider>
-      </ProductProvider>
+      <CategoryProvider>
+        <ProductProvider>
+          <ClerkProvider>
+            <body className={inter.className}>
+              <Navbar />
+              {children}
+              <Footer />
+            </body>
+          </ClerkProvider>
+        </ProductProvider>
+      </CategoryProvider>
     </html>
   );
 }
