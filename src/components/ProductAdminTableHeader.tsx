@@ -6,7 +6,7 @@ export default function ProductAdminTableHeader() {
       <div>ID</div>
       <div>IMAGE</div>
       <div>NAME</div>
-      <div>QTT</div>
+      <div>CATEGORY</div>
       <div>PRICE</div>
     </div>
   );

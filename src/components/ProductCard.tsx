@@ -3,7 +3,7 @@ import Image from "next/image";
 
 interface IProductCardProps {
   product: {
-    id: string;
+    id?: string;
     name: string;
     imageUrl: string | null;
   };

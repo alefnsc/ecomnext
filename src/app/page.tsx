@@ -14,9 +14,14 @@ export default function HomePage() {
   return (
     <Container title="Products">
       <ProductGrid>
-        {products.map((product: Product) => {
-          return <ProductCard key={product.id} product={product} />;
-        })}
+        {products &&
+          products.map((product: Product) => {
+            return (
+              product.isActive && (
+                <ProductCard key={product.id} product={product} />
+              )
+            );
+          })}
       </ProductGrid>
     </Container>
   );
