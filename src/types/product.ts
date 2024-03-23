@@ -1,13 +1,13 @@
 export interface Product {
-  id: string;
+  id?: string;
   name: string;
   imageUrl: string | null;
   price: number;
   description: string | null;
   category: string;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
   ProductStock?: ProductStock[];
   orderItems?: OrderItem[];
 }
