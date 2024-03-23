@@ -7,9 +7,20 @@ export default authMiddleware({
     /^\/products\/.*/,
     "/api/products",
     "/api/products/:productId",
+    "/categories",
+    /^\/categories\/.*/,
+    "/api/categories",
+    "/api/categories/:categoryId",
   ],
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/products", "/api/products"],
+  matcher: [
+    "/((?!.+\\.[\\w]+$|_next).*)",
+    "/",
+    "/products",
+    "/api/products",
+    "/categories",
+    "/api/categories",
+  ],
 };
