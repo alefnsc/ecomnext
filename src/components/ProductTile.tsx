@@ -39,19 +39,20 @@ export default function ProductTile({ product }: IProductTileProps) {
           : "even:bg-gray-100 odd:bg-white hover:bg-cyan-50 transition duration-300 ease-in-out"
       }   w-full grid grid-cols-6 gap-6 items-center justify-center py-2 px-4`}
     >
-      <div> {product.id}</div>
       <div>
         <Image
           alt={product.name}
           src={product.imageUrl}
-          className="w-16 h-16 rounded-full"
+          className={`${!product.isActive ? "grayscale" : ""} 
+              w-16 h-16 rounded-full`}
           width={40}
           height={40}
         />
       </div>
       <div className="overflow-hidden text-overflow">{product.name}</div>
       <div>{product.category}</div>
-      <div>{product.price}</div>
+      <div>{product.description}</div>
+      <div>{product.price.toFixed(2)}</div>
       <div className="flex flex-row flex-wrap xs:space-y-2  xl:space-x-2 lg:space-x-2 md:space-x-2 ">
         <button
           className={`p-1  rounded-md ${
