@@ -96,7 +96,6 @@ export default function AdminProducts() {
             className="rounded-md bg-white shadow-md p-2 m-2"
             value={selectedCategory}
             onChange={handleCategoryChange}
-            defaultValue={""}
           >
             <option disabled value="disabled">
               Filter By Category
