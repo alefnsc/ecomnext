@@ -42,60 +42,7 @@ export async function PUT(
   { params }: PutProductByIdParams
 ) {
   const { productId } = params;
-
-  const { toggle } = await req.json();
-
-  if (toggle) {
-    if (!productId) {
-      return new Response(
-        JSON.stringify({ error: "Product ID not informed" }),
-        {
-          status: 400,
-        }
-      );
-    }
-
-    const existentProduct = await prisma.product.findFirst({
-      where: { id: productId },
-    });
-
-    const product = await stripe.products.update(productId, {
-      active: !existentProduct.isActive,
-    });
-
-    if (!product) {
-      return new Response(
-        JSON.stringify({ error: "It was not possible to toggle product" }),
-        { status: 500 }
-      );
-    }
-
-    const price = product.default_price as Stripe.Price;
-
-    const output = {
-      id: product.id,
-      name: product.name,
-      imageUrl: product.images[0],
-      active: !existentProduct.isActive,
-      price: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format((price.unit_amount as number) / 100),
-    };
-
-    const result = await prisma.product.update({
-      where: { id: productId },
-      data: { isActive: !existentProduct.isActive },
-    });
-
-    return new Response(
-      JSON.stringify({ message: "Product inactivated", product: output })
-    );
-  }
-
   const body = await req.formData();
-
-  console.log("passou aqui");
 
   const name = body.get("name")?.toString();
   const description = body.get("description")?.toString();
@@ -103,8 +50,6 @@ export async function PUT(
   const price = body.get("price")?.valueOf() as number;
   let currentImageUrl = body.get("imageUrl")?.toString();
   const image = body.get("image");
-
-  console.log(name, description, category, price, currentImageUrl, image);
 
   if (!name || !description || !category || !price) {
     return new Response(JSON.stringify({ ok: false }));
@@ -136,19 +81,20 @@ export async function PUT(
 
   let updatedPrice = undefined;
   // Retrieves the current price if the product exists
+
   if (product) {
-    const curentPrice = await stripe.prices.retrieve(
+    const currentPrice = await stripe.prices.retrieve(
       product.default_price as string
     );
     // Update product price if it's different from the current one
-    if (curentPrice.unit_amount !== Math.ceil(Number(price) * 100)) {
+    if (currentPrice.unit_amount / 100 !== Math.ceil(Number(price) * 100)) {
       updatedPrice = await stripe.prices.create({
         product: product.id,
         currency: "brl",
-        unit_amount: Number(price),
+        unit_amount: Math.ceil(Number(price) * 100),
       });
     } else {
-      updatedPrice = curentPrice;
+      updatedPrice = Number(currentPrice);
     }
   }
 
@@ -178,7 +124,7 @@ export async function PUT(
       name,
       description,
       category,
-      price: price,
+      price: Number(price),
       imageUrl: imageUrl || currentImageUrl,
       updatedAt: new Date(),
     },

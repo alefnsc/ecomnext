@@ -11,13 +11,12 @@ export default function ToggleObjectModal({
 }: IToggleObjectModal) {
   const handleObjectToggle = async () => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/products/${product.id}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/products/${product.id}/toggleProduct`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ toggle: true }),
       }
     );
     toggleToggleObjectModal();
